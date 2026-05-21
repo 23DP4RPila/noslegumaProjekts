@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Mans konts — Uzdevumu pārvaldnieks</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pāriet uz saturu</a>
+  <header class="topbar">
+    <a href="/app.html" class="brand">Uzdevumi</a>
+    <nav>
+      <a href="/app.html" class="btn btn--ghost btn--small">Uzdevumi</a>
+      <button id="logoutBtn" class="btn btn--ghost btn--small" type="button">Iziet</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container container--narrow">
+    <h1>Mans konts</h1>
+    <div id="alert" class="alert" role="alert" hidden></div>
+
+    <form id="accountForm" class="card">
+      <div class="field"><label for="username">Lietotājvārds</label><input id="username" required minlength="3" maxlength="30" /></div>
+      <div class="field"><label for="email">E-pasts</label><input id="email" type="email" required /></div>
+      <div class="field"><label for="description">Apraksts</label><textarea id="description" maxlength="500"></textarea></div>
+      <div class="field">
+        <label for="password">Jauna parole</label>
+        <input id="password" type="password" autocomplete="new-password" minlength="8" />
+        <div class="hint">Atstāj tukšu, lai neminītu paroli.</div>
+      </div>
+      <button type="submit">Saglabāt</button>
+    </form>
+  </main>
+
+  <script src="/js/account.js"></script>
+  <script src="/js/pwa.js"></script>
+</body>
+</html>
