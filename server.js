@@ -57,14 +57,6 @@ app.use(session({
   },
 }));
 
-// ------- Rate limiting (auth endpoints) -------
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 20,
-  message: { error: 'Pārāk daudz pieprasījumu. Mēģiniet vēlāk.' },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
 
 // ------- API routes -------
 app.use('/api/auth',       authLimiter, authRoutes);
