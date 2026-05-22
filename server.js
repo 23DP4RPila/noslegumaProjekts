@@ -8,7 +8,7 @@ const session     = require('express-session');
 const cookieParser = require('cookie-parser');
 const rateLimit   = require('express-rate-limit');
 
-require('./db'); // initialise DB on boot
+require('./db'); 
 
 const authRoutes       = require('./routes/auth');
 const tasksRoutes      = require('./routes/tasks');
@@ -20,8 +20,7 @@ const adminRoutes      = require('./routes/admin');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Trust Railway's reverse proxy so req.secure reflects HTTPS correctly,
-// which allows express-session to set Secure cookies in production.
+
 app.set('trust proxy', 1);
 
 // ------- OWASP security headers (helmet) -------
@@ -55,13 +54,13 @@ app.use(session({
     httpOnly: true,
     sameSite: 'lax',
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 }));
 
 // ------- Rate limiting (auth endpoints) -------
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 min
+  windowMs: 15 * 60 * 1000,
   max: 20,
   message: { error: 'Pārāk daudz pieprasījumu. Mēģiniet vēlāk.' },
   standardHeaders: true,
