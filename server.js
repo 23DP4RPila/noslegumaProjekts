@@ -20,6 +20,10 @@ const adminRoutes      = require('./routes/admin');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Trust Railway's reverse proxy so req.secure reflects HTTPS correctly,
+// which allows express-session to set Secure cookies in production.
+app.set('trust proxy', 1);
+
 // ------- OWASP security headers (helmet) -------
 app.use(helmet({
   contentSecurityPolicy: {
