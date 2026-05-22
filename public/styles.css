@@ -1,3 +1,5 @@
+[hidden] { display: none !important; }
+
 :root {
   color-scheme: light;
   --bg: #fafaf9;
