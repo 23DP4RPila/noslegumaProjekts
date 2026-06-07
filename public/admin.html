@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Administrātora panelis</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pāriet uz saturu</a>
+  <header class="topbar">
+    <a href="/app.html" class="brand">Uzdevumi - Admin</a>
+    <nav>
+      <a href="/app.html" class="btn btn--ghost btn--small">Uzdevumi</a>
+      <button id="logoutBtn" class="btn btn--ghost btn--small" type="button">Iziet</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container container--wide">
+    <h1>Administrātora panelis</h1>
+    <p class="muted">Sistēmas pārvaldība un kopsavilkums.</p>
+
+    <section aria-label="Sistēmas statistika">
+      <h2>Sistēmas statistika</h2>
+      <div id="sysStats" class="stat-grid"></div>
+    </section>
+
+    <section>
+      <h2>Top 5 lietotāji</h2>
+      <div class="card"><table id="topUsersTable"><thead><tr><th>Lietotājs</th><th>Uzdevumi</th><th>Pabeigti</th><th>Pabeigto %</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>Lietotāji</h2>
+      <div class="row" style="margin-bottom:10px;">
+        <input id="searchUsers" type="search" placeholder="Meklēt..." aria-label="Meklēt lietotājus" />
+        <select id="filterRole" aria-label="Filtrēt pēc lomas">
+          <option value="">Visi</option>
+          <option value="user">Lietotāji</option>
+          <option value="admin">Administratori</option>
+        </select>
+      </div>
+      <div class="card">
+        <table id="usersTable">
+          <thead>
+            <tr><th>ID</th><th>Lietotājvārds</th><th>E-pasts</th><th>Loma</th><th>Aktīvs</th><th>Uzd.</th><th>Pab.</th><th>Darbības</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Pēdējās darbības</h2>
+      <div class="card"><table id="activityTable"><thead><tr><th>Laiks</th><th>Lietotājs</th><th>Darbība</th><th>Objekts</th><th>IP</th></tr></thead><tbody></tbody></table></div>
+    </section>
+  </main>
+
+  <script src="/js/admin.js"></script>
+  <script src="/js/pwa.js"></script>
+</body>
+</html>

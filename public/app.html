@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="manifest" href="/manifest.json" />
+  <title>Mani uzdevumi - Uzdevumu pārvaldnieks</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Pāriet uz saturu</a>
+  <header class="topbar">
+    <a href="/app.html" class="brand">Uzdevumi</a>
+    <nav>
+      <span id="userBadge" class="muted small"></span>
+      <a href="/account.html" class="btn btn--ghost btn--small">Konts</a>
+      <a href="/stats.html"   class="btn btn--ghost btn--small">Statistika</a>
+      <a href="#" id="adminLink" class="btn btn--ghost btn--small" hidden>Admin</a>
+      <button id="logoutBtn" class="btn btn--ghost btn--small" type="button">Iziet</button>
+    </nav>
+  </header>
+
+  <main id="main" class="container container--wide">
+    <section aria-label="Pašreizējais uzdevums">
+      <h1>Pašreizējais uzdevums</h1>
+      <div id="focusArea"></div>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-top:0;">Pievienot uzdevumu</h2>
+      <div id="addAlert" class="alert alert--error" role="alert" hidden></div>
+      <form id="addForm">
+        <div class="field">
+          <label for="newTitle">Virsraksts</label>
+          <input id="newTitle" name="title" type="text" required maxlength="200" />
+        </div>
+        <details>
+          <summary class="muted small" style="cursor:pointer; margin-bottom:8px;">Papildu opcijas</summary>
+          <div class="field">
+            <label for="newDescription">Apraksts</label>
+            <textarea id="newDescription" name="description" maxlength="2000"></textarea>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="newDeadline">Termiņš</label>
+              <input id="newDeadline" name="deadline" type="datetime-local" />
+            </div>
+            <div class="field">
+              <label for="newCategory">Kategorija</label>
+              <select id="newCategory" name="category_id">
+                <option value="">- Nav -</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="newPriority">Prioritāte</label>
+              <select id="newPriority" name="priority">
+                <option value="0">Nav prioritātes</option>
+                <option value="1">Zema</option>
+                <option value="2">Vidēja</option>
+                <option value="3">Augsta</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="newType">Veids</label>
+              <select id="newType" name="type">
+                <option value="regular">Parastais</option>
+                <option value="smart">SMART</option>
+              </select>
+            </div>
+          </div>
+          <fieldset id="smartFields" hidden style="border:1px solid var(--border); border-radius:var(--radius); padding:12px;">
+            <legend>SMART detaļas</legend>
+            <div class="field">
+              <label for="smart_specific">
+                S - Konkrēts
+                <span class="help" tabindex="0" role="note"
+                      data-tip="Konkrēts un skaidrs mērķis. Atbildi uz 'Ko?', 'Kur?', 'Kāpēc?'. Piemērs: 'Apgūt 10. nodaļas vārdus' (nevis tikai 'mācīties angļu').">?</span>
+              </label>
+              <input id="smart_specific" />
+            </div>
+            <div class="field">
+              <label for="smart_measurable">
+                M - Mērāms
+                <span class="help" tabindex="0" role="note"
+                      data-tip="Kā tu zināsi, ka esi izdarījis? Skaitlis vai pārbaudāms rezultāts. Piemērs: 'Iemācīties 25 jaunus vārdus' vai 'Uzrakstīt 500 vārdu eseju'.">?</span>
+              </label>
+              <input id="smart_measurable" />
+            </div>
+            <div class="field">
+              <label for="smart_achievable">
+                A - Sasniedzams
+                <span class="help" tabindex="0" role="note"
+                      data-tip="Reāli izpildāms ar tev pieejamo laiku un resursiem. Piemērs: 'Skriet 5 km divreiz nedēļā' (nevis 'pieteikties maratonam rītdien').">?</span>
+              </label>
+              <input id="smart_achievable" />
+            </div>
+            <div class="field">
+              <label for="smart_relevant">
+                R - Aktuāls
+                <span class="help" tabindex="0" role="note"
+                      data-tip="Kāpēc tieši šis ir svarīgi tieši tagad? Piemērs: 'Sagatavoties matemātikas eksāmenam, jo tas ir nākamnedēļ'.">?</span>
+              </label>
+              <input id="smart_relevant" />
+            </div>
+            <div class="field">
+              <label for="smart_timebound">
+                T - Ar termiņu
+                <span class="help" tabindex="0" role="note"
+                      data-tip="Konkrēts datums vai laiks līdz kuram jābūt izdarītam. Piemērs: 'Līdz piektdienai 17:00' vai '2026. gada 23. maijs'.">?</span>
+              </label>
+              <input id="smart_timebound" />
+            </div>
+          </fieldset>
+        </details>
+        <button type="submit">Pievienot</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2 style="margin-top:0;">Kategorijas</h2>
+      <form id="addCategoryForm" class="inline-form" style="max-width:480px;" aria-label="Pievienot jaunu kategoriju">
+        <input id="catName" maxlength="50" placeholder="Jauna kategorija..." aria-label="Kategorijas nosaukums" />
+        <input id="catColor" type="color" value="#2563eb" aria-label="Krāsa" />
+        <button type="submit">Pievienot</button>
+      </form>
+      <ul id="categoryList" class="task-list" style="margin-top:10px;"></ul>
+    </section>
+
+    <section class="tasks-section" aria-label="Visi uzdevumi">
+      <h2>Visi uzdevumi</h2>
+
+      <div class="card" aria-label="Filtri un meklēšana" style="margin-bottom:14px;">
+        <div class="row">
+          <div>
+            <label for="searchInput" class="small">Meklēt</label>
+            <input id="searchInput" type="search" placeholder="Meklēt uzdevumus..." aria-label="Meklēt uzdevumus" />
+          </div>
+          <div>
+            <label for="filterStatus" class="small">Statuss</label>
+            <select id="filterStatus" aria-label="Filtrēt pēc statusa">
+              <option value="">Visi</option>
+              <option value="pending">Nepabeigti</option>
+              <option value="done">Pabeigti</option>
+            </select>
+          </div>
+          <div>
+            <label for="filterType" class="small">Veids</label>
+            <select id="filterType" aria-label="Filtrēt pēc veida">
+              <option value="">Visi</option>
+              <option value="regular">Parastais</option>
+              <option value="smart">SMART</option>
+            </select>
+          </div>
+          <div>
+            <label for="filterCategory" class="small">Kategorija</label>
+            <select id="filterCategory" aria-label="Filtrēt pēc kategorijas">
+              <option value="">Visas</option>
+            </select>
+          </div>
+          <div>
+            <label for="sortBy" class="small">Kārtot</label>
+            <select id="sortBy" aria-label="Kārtot uzdevumus">
+              <option value="order">Pēc secības</option>
+              <option value="created">Pēc izveides</option>
+              <option value="deadline">Pēc termiņa</option>
+              <option value="priority">Pēc prioritātes</option>
+              <option value="title">Pēc virsraksta</option>
+            </select>
+          </div>
+        </div>
+        <p id="activeFilterMsg" class="small muted" style="margin:8px 0 0; display:none;"></p>
+      </div>
+
+      <ul id="taskList" class="task-list" aria-live="polite"></ul>
+      <p id="emptyMsg" class="muted small" hidden>Nav uzdevumu, kas atbilst filtriem.</p>
+    </section>
+  </main>
+
+  <dialog id="editDialog" aria-labelledby="editDialogTitle">
+    <form id="editForm" method="dialog" style="min-width:300px; max-width:500px;">
+      <h2 id="editDialogTitle">Rediģēt uzdevumu</h2>
+      <input type="hidden" id="editId" />
+      <div class="field"><label for="editTitle">Virsraksts</label><input id="editTitle" required maxlength="200" /></div>
+      <div class="field"><label for="editDescription">Apraksts</label><textarea id="editDescription" maxlength="2000"></textarea></div>
+      <div class="row">
+        <div class="field"><label for="editDeadline">Termiņš</label><input id="editDeadline" type="datetime-local" /></div>
+        <div class="field"><label for="editCategory">Kategorija</label><select id="editCategory"><option value="">- Nav -</option></select></div>
+        <div class="field"><label for="editPriority">Prioritāte</label>
+          <select id="editPriority">
+            <option value="0">Nav prioritātes</option>
+            <option value="1">Zema</option>
+            <option value="2">Vidēja</option>
+            <option value="3">Augsta</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:10px; display:flex; gap:8px; justify-content:flex-end;">
+        <button type="button" id="editCancel" class="btn btn--ghost">Atcelt</button>
+        <button type="submit">Saglabāt</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/pwa.js"></script>
+</body>
+</html>
