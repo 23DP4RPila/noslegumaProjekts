@@ -59,8 +59,8 @@ app.use(session({
 
 
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 20,
+  windowMs: 1 * 60 * 1000,
+  max: 200,
   message: { error: 'Pārāk daudz pieprasījumu. Mēģiniet vēlāk.' },
   standardHeaders: true,
   legacyHeaders: false,
