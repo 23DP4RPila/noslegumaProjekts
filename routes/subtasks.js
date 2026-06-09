@@ -1,4 +1,3 @@
-// Subtask routes - split tasks into smaller steps (per spec)
 const express = require('express');
 const router  = express.Router();
 const { db, logActivity } = require('../db');
@@ -41,7 +40,6 @@ router.post('/', (req, res) => {
   res.json({ id: info.lastInsertRowid });
 });
 
-// PUT /api/subtasks/:id
 router.put('/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);
   const sub = db.prepare(`
